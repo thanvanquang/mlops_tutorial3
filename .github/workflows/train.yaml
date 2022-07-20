@@ -14,9 +14,10 @@ jobs:
         run: |
           pip install -r requirements.txt
           dvc repro 
+          dvc config core.autostage true
           git fetch --prune
           dvc metrics diff --show-md master > report.md
           # Add figure to the report
           echo "## Validating results by region"
-          cml-publish by_region.png --md >> report.md
-          cml-send-comment report.md
+          cml publish by_region.png --md >> report.md
+          cml send-comment report.md
