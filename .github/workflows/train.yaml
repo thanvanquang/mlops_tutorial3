@@ -14,9 +14,6 @@ jobs:
         run: |
           pip install -r requirements.txt
           dvc repro 
-          git add dvc.lock
-          dvc config core.autostage true
-          git config --global --add safe.directory /__w/mlops_tutorial3/mlops_tutorial3
           git fetch --prune
           echo "## Metrics: Workspace vs. Main"
           dvc metrics diff --show-md main > report.md
