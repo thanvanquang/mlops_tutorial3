@@ -7,7 +7,7 @@ jobs:
     container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v2
-#      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-cml@v1
       - name: cml_run
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -18,5 +18,5 @@ jobs:
           dvc metrics diff --show-md master > report.md
           # Add figure to the report
           echo "## Validating results by region"
-          cml-publish by_region.png --md >> report.md
-          cml-send-comment report.md
+          cml publish by_region.png --md >> report.md
+          cml send-comment report.md
