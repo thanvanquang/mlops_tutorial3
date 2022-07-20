@@ -1,4 +1,4 @@
-name: mlops_tutorial3
+name: farmer
 on: [push]
 jobs:
   run:
