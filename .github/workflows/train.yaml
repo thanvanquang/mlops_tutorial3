@@ -1,24 +1,21 @@
-name: farmer
+name: farmers
 on: [push]
 jobs:
   run:
     runs-on: ubuntu-latest
-    # optionally use a convenient Ubuntu LTS + DVC + CML image
-    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
+    container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
       - name: cml_run
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -r requirements.txt
           dvc repro 
           git fetch --prune
           echo "## Metrics: Workspace vs. Main"
-          dvc metrics diff --show-md main > report.md
-          
+          dvc metrics diff --show-md master > report.md
           # Add figure to the report
           echo "## Validating results by region" >> report.md
-          cml publish by_region.png --md >> report.md
-          cml send-comment report.md
+          cml-publish by_region.png --md >> report.md
+          cml-send-comment report.md
